@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.aliyun.auikits.karaoke.room.vm.KtvChooseSongPanelViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="570dp"
+        android:background="@color/voicechat_background"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll_panel_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.panelHeaderVisibility}"
+            >
+
+            <TextView android:id="@+id/tv_choose_song"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:layout_marginRight="40dp"
+                android:onClick="@{viewModel::onChooseSongTitleClick}"
+                style="@style/voicechat_text_style_14"
+                android:text="@string/ktv_enter_song_selector"
+                android:background="@{viewModel.chooseSongPanelVisible?@drawable/ktv_song_panel_title_selected_bg:@drawable/ktv_song_panel_title_bg}"
+                />
+            <TextView android:id="@+id/tv_chosen_song"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:layout_marginLeft="40dp"
+                android:background="@{viewModel.chooseSongPanelVisible?@drawable/ktv_song_panel_title_bg:@drawable/ktv_song_panel_title_selected_bg}"
+                android:onClick="@{viewModel::onChosenSongTitleClick}"
+                style="@style/voicechat_text_style_14"
+                android:text="@{viewModel.chosenSongHeaderText}"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_search_keyword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal"
+            android:visibility="@{viewModel.searchEditTextVisibility}"
+            app:layout_constraintTop_toBottomOf="@id/ll_panel_header"
+            >
+
+            <EditText
+                android:id="@+id/et_search_keyword"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/voicechat_chat_dialog_msg_input_bg"
+                android:imeOptions="actionUnspecified"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:singleLine="true"
+                android:textColor="@color/voicechat_white_default"
+                android:textCursorDrawable="@drawable/voicechat_chat_input_cursor"
+                android:textSize="12sp"
+                android:text=""
+                android:hint="@string/ktv_song_search_hint"
+                android:textColorHint="@color/voicechat_gray"
+                android:visibility="@{viewModel.searchEditTextVisibility}"
+                android:onClick="@{viewModel::onEdittextClick}"
+                />
+
+            <TextView
+                android:id="@+id/btn_cancel_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="24dp"
+                android:text="@string/ktv_cancel"
+                style="@style/voicechat_text_style_14"
+                android:gravity="center"
+                android:visibility="@{viewModel.searchCancelButtonVisibility}"
+                android:onClick="@{viewModel::onCancelClick}"
+                />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_choose_song_panel"
+            android:layout_width="match_parent"
+            android:layout_height="480dp"
+            android:background="@color/voicechat_background"
+            android:visibility="@{viewModel.chooseSongPanelVisibility}"
+            app:layout_constraintTop_toBottomOf="@id/ll_search_keyword"
+            >
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_song_rank"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                app:tabMode="scrollable"
+                app:tabGravity="fill"
+                android:background="@color/voicechat_background"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabTextAppearance="@style/voicechat_text_style_12"
+                />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewpager_song_list"
+                android:layout_width="match_parent"
+                android:layout_height="428dp"
+                android:background="@color/voicechat_background"
+                app:layout_constraintTop_toBottomOf="@id/tab_song_rank"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_search_song_panel"
+            android:layout_width="match_parent"
+            android:layout_height="480dp"
+            android:background="@color/voicechat_background"
+            app:layout_constraintTop_toBottomOf="@id/ll_search_keyword"
+            android:visibility="@{viewModel.searchSongPanelVisibility}"
+            >
+            <com.scwang.smart.refresh.layout.SmartRefreshLayout
+                android:id="@+id/srl_search_song_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+                <com.scwang.smart.refresh.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_search_song_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:paddingTop="20dp"
+                    />
+                <com.scwang.smart.refresh.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_chosen_song_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/voicechat_background"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/ll_panel_header"
+            android:visibility="@{viewModel.chosenSongPanelVisibility}"
+            android:paddingEnd="6dp"
+            android:paddingTop="20dp"
+            >
+
+            <include android:id="@+id/ll_current_playing_card"
+                layout="@layout/ktv_layout_chosen_song_platform_song_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/llay_chat_header"
+                app:layout_constraintLeft_toLeftOf="@id/llay_chat_header"
+                app:layout_constraintRight_toRightOf="@id/llay_chat_header"
+                app:viewModel="@{viewModel.chosenSongViewModel.currentPlayingSongCardViewModel}"
+                />
+
+            <com.scwang.smart.refresh.layout.SmartRefreshLayout
+                android:id="@+id/srl_already_chosen_song_list"
+                android:layout_width="match_parent"
+                android:layout_height="432dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+                <com.scwang.smart.refresh.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_already_chosen_song_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    />
+                <com.scwang.smart.refresh.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

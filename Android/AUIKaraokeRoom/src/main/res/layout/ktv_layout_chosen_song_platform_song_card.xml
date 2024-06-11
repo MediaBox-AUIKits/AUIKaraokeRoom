@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.aliyun.auikits.karaoke.room.vm.KtvChosenSongCardViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="30dp"
+        android:background="@color/voicechat_background"
+        app:visibleOrGone="@{viewModel.cardVisibility}"
+        >
+
+        <com.aliyun.auikits.karaoke.room.widget.view.RoundRectImageView
+            android:id="@+id/iv_song_poster"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ktv_song_poster_default"
+            app:imageUrl="@{viewModel.albumUrl}"
+            app:placeholder="@{@drawable/voicechat_ic_avatar_default}"
+            app:error="@{@drawable/voicechat_ic_avatar_default}"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginLeft="12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_song_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.songName}"
+                android:layout_marginBottom="2dp"
+                style="@style/voicechat_text_style_12"
+                />
+
+            <TextView
+                android:id="@+id/tv_song_chosen_person"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.memberNameText}"
+                android:layout_marginBottom="2dp"
+                style="@style/voicechat_text_style_10_gray"
+                />
+
+            <TextView
+                android:id="@+id/tv_song_singer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.singerName}"
+                style="@style/voicechat_text_style_8_gray"
+                />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_action_skip"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="14dp"
+            android:src="@drawable/ktv_card_skip"
+            app:visibleOrGone="@{viewModel.actionSkipVisibility}"
+            />
+
+        <ImageView
+            android:id="@+id/iv_action_top"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="14dp"
+            android:src="@drawable/ktv_card_top"
+            app:visibleOrGone="@{viewModel.actionTopVisibility}"
+            />
+
+        <ImageView
+            android:id="@+id/iv_action_trash"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="14dp"
+            android:src="@drawable/ktv_card_trash"
+            app:visibleOrGone="@{viewModel.actionTrashVisibility}"
+            />
+
+        <ImageView
+            android:id="@+id/iv_action_playing"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="14dp"
+            android:src="@drawable/ktv_card_playing"
+            app:visibleOrGone="@{viewModel.actionPlayingVisibility}"
+            />
+
+    </LinearLayout>
+
+</layout>

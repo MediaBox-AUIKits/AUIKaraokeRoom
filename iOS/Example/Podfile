@@ -1,0 +1,34 @@
+use_frameworks!
+#source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '10.0'
+
+workspace 'AUIKaraokeRoomExample'
+
+AlivcSDK='AliVCSDK_ARTC'
+
+target 'Example' do
+
+  pod 'SDWebImage', '~> 5.15.4'
+  pod 'AUIFoundation/All', :path => '../AUIBaseKits/AUIFoundation/'
+  pod 'AUIMessage/AliVCIM', :path => '../AUIBaseKits/AUIMessage/'
+
+  pod "#{AlivcSDK}", '~> 6.10.2'
+
+  pod "AUIRoomCore/#{AlivcSDK}", :path => '../AUIRoomCore/'
+  pod "AUIRoomCore/KaraokeRoomAPI", :path => '../AUIRoomCore/'
+
+  pod 'AUIVoiceRoom', :path => '../AUIVoiceRoom/'
+  pod 'AUIKaraokeRoom', :path => '../'
+  
+end
+
+post_install do |installer|
+    installer.generated_projects.each do |project|
+          project.targets.each do |target|
+              target.build_configurations.each do |config|
+                  config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
+               end
+          end
+   end
+end
