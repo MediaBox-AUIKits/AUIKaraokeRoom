@@ -70,7 +70,7 @@ public let KaraokeRoomServerDomain = "你的应用服务器域名"
   - AliVCSDK_ARTC：适用于互动直播的音视频终端SDK，也可以使用：AliVCSDK_Standard或AliVCSDK_InteractiveLive，参考[快速集成](https://help.aliyun.com/document_detail/2412571.htm)
   - AUIFoundation：基础UI组件
   - AUIMessage：互动消息组件
-  - AUIRoomCore：互娱语聊场景核心组件
+  - AUIRoomCore：互娱语聊场景核心组件，包含在线K歌房场景化API
   - AUIVoiceRoom：语聊房场景UI组件源码
   - AUIKaraokeRoom：在线K歌房场景UI组件源码
 ```ruby
@@ -88,9 +88,10 @@ target '你的App target' do
     # 互动消息组件
     pod 'AUIMessage/AliVCIM', :path => "./AUIKaraokeRoom/AUIBaseKits/AUIMessage/"
 
-    # 互娱语聊场景核心组件
+    # 在线K歌房场景化API
     pod 'AUIRoomCore/AliVCSDK_ARTC', :path => "./AUIKaraokeRoom/AUIRoomCore/"
-    
+    pod "AUIRoomCore/KaraokeRoomAPI", :path => './AUIKaraokeRoom/AUIRoomCore/'
+
     # 语聊房场景UI组件
     pod 'AUIVoiceRoom',  :path => "./AUIKaraokeRoom/AUIVoiceRoom/"
     
